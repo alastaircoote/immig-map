@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+/* CSS goes here. */
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="js/index.js"></script>
+<script>
+
+var width = 960,
+    height = 1160;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", "100%")
+    .attr("height", "100%");
+
+d3.json("data/final-topo.json", function(err, geoshapes) {
+    width = $(window).width()
+    var projection = d3.geo.mercator()
+        .scale((width + 1) / 2 / Math.PI)
+        .translate([width/2, height/2])
+    svg.append("path")
+      .datum(topojson.feature(geoshapes, geoshapes.objects.final))
+      .attr("d", d3.geo.path().projection(projection));
+})
+
+</script>
